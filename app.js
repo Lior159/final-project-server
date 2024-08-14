@@ -18,9 +18,12 @@ app.get("/", (req, res) => {
 
 app.post("/action", (req, res) => {
   const action = req.body.action;
-  sendActionToDevice(action)
-    .then((result) => {
-      let status;
+
+  fetchTokenFromDatabase()
+    .then(() => {
+      return sendActionToDevice(action);
+    })
+    .then(() => {
       switch (action) {
         case "START_RECORDING":
           res.json({ action, status: "Recording Started", success: true });
@@ -30,6 +33,9 @@ app.post("/action", (req, res) => {
           break;
         case "START_ALERT":
           res.json({ action, status: "Alert sent", success: true });
+          break;
+        case "GET_LOCATION":
+          res.json({ action, status: "Location fetched", success: true });
           break;
         default:
           res.json({ action, status: "Other action", success: true });

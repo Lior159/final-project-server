@@ -66,3 +66,27 @@ h1 {
 .button.alert:active {
   background-color: #1976d2;
 }
+
+.button.stop-alert {
+  background-color: #ff9800;
+}
+
+.button.stop-alert:hover {
+  background-color: #fb8c00;
+}
+
+.button.stop-alert:active {
+  background-color: #f57c00;
+}
+
+.button.location {
+  background-color: #673ab7; /* Different color for the new button */
+}
+
+.button.location:hover {
+  background-color: #5e35b1;
+}
+
+.button.location:active {
+  background-color: #512da8;
+}

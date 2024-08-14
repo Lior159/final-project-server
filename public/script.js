@@ -1,6 +1,8 @@
 const startButton = document.querySelector(".start");
 const stopButton = document.querySelector(".stop");
-const pingButton = document.querySelector(".alert");
+const alertButton = document.querySelector(".alert");
+const stopAlertButton = document.querySelector(".stop-alert");
+const locationButton = document.querySelector(".location");
 const statusLabel = document.createElement("div");
 
 statusLabel.style.marginTop = "20px";
@@ -36,19 +38,28 @@ const startRecording = () => {
     stopButton.style.display = "inline";
   });
 };
+
 const stopRecording = () => {
   sendCommand("STOP_RECORDING").then((res) => {
     startButton.style.display = "inline";
     stopButton.style.display = "none";
   });
 };
+
 const sendAlert = () => {
   sendCommand("START_ALERT");
 };
 
-const storeLocation = () => {};
-const fetchLocation = () => {};
+const stopAlert = () => {
+  sendCommand("STOP_ALERT");
+};
+
+const getLocation = () => {
+  sendCommand("GET_LOCATION");
+};
 
 startButton.addEventListener("click", () => startRecording());
 stopButton.addEventListener("click", () => stopRecording());
-pingButton.addEventListener("click", () => sendAlert());
+alertButton.addEventListener("click", () => sendAlert());
+stopAlertButton.addEventListener("click", () => stopAlert());
+locationButton.addEventListener("click", () => getLocation());

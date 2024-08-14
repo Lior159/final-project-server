@@ -12,7 +12,7 @@ admin.initializeApp({
 const sendActionToDevice = async (action) => {
   const message = {
     data: {
-      action, // "start" or "stop"
+      action,
     },
     token: fcmToken,
   };
