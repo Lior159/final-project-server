@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const {
   fetchTokenFromDatabase,
   sendActionToDevice,
+  fetchCoordinatesFromDatabase,
 } = require("./firebase_util");
 const path = require("path");
 
@@ -35,7 +36,14 @@ app.post("/action", (req, res) => {
           res.json({ action, status: "Alert sent", success: true });
           break;
         case "GET_LOCATION":
-          res.json({ action, status: "Location fetched", success: true });
+          fetchCoordinatesFromDatabase().then((coodrinates) => {
+            res.json({
+              action,
+              status: "Location fetched",
+              success: true,
+              coodrinates,
+            });
+          });
           break;
         default:
           res.json({ action, status: "Other action", success: true });

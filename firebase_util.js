@@ -39,7 +39,21 @@ const fetchTokenFromDatabase = async () => {
   }
 };
 
+const fetchCoordinatesFromDatabase = async () => {
+  const databaseRef = admin.database().ref(`locations/coordinates`);
+  try {
+    const snapshot = await databaseRef.once("value");
+    coordinates = snapshot.val();
+    console.log("Coordinates:", coordinates);
+    return coordinates;
+  } catch (error) {
+    console.error("Error fetching coordinates:", error);
+    return null;
+  }
+};
+
 module.exports = {
   sendActionToDevice,
   fetchTokenFromDatabase,
+  fetchCoordinatesFromDatabase,
 };

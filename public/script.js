@@ -13,7 +13,7 @@ statusLabel.style.color = "#333";
 document.querySelector(".container").appendChild(statusLabel);
 
 function sendCommand(action) {
-  fetch("/action", {
+  return fetch("/action", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -55,7 +55,10 @@ const stopAlert = () => {
 };
 
 const getLocation = () => {
-  sendCommand("GET_LOCATION");
+  sendCommand("GET_LOCATION").then((res) => {
+    const { coodrinates } = res;
+    updateMap(coodrinates.latitude, coodrinates.longitude);
+  });
 };
 
 startButton.addEventListener("click", () => startRecording());
@@ -63,3 +66,21 @@ stopButton.addEventListener("click", () => stopRecording());
 alertButton.addEventListener("click", () => sendAlert());
 stopAlertButton.addEventListener("click", () => stopAlert());
 locationButton.addEventListener("click", () => getLocation());
+
+const map = L.map("map").setView([0, 0], 2); // Default view before location is retrieved
+
+L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: "&copy; OpenStreetMap contributors",
+}).addTo(map);
+
+let marker;
+
+// Function to update the map with the new location
+function updateMap(latitude, longitude) {
+  if (marker) {
+    marker.setLatLng([latitude, longitude]);
+  } else {
+    marker = L.marker([latitude, longitude]).addTo(map);
+  }
+  map.setView([latitude, longitude], 13); // Zoom in to the location
+}
