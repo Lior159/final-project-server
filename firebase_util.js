@@ -1,12 +1,11 @@
 const admin = require("firebase-admin");
-const serviceAccount = require("./final-project-23698-firebase-adminsdk-tppr0-1f7763d0c5.json");
+const serviceAccount = require(`./${process.env.FIREBASE_JSON_FILE_NAME}`);
 
 let fcmToken;
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
-  databaseURL:
-    "https://final-project-23698-default-rtdb.europe-west1.firebasedatabase.app",
+  databaseURL: process.env.DB_URL,
 });
 
 const sendActionToDevice = async (action) => {
